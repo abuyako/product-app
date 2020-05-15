@@ -18,6 +18,7 @@ export class ProductListComponent implements OnInit{
     }
     set listFilter(value: string) {
       this._listFilter = value;
+      this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
     }
 
     filteredProducts: IProduct[];
@@ -73,6 +74,12 @@ export class ProductListComponent implements OnInit{
           "imageUrl": "assets/images/xbox-controller.png"
         }
       ];
+
+      performFilter(filterBy: string): IProduct[] {
+        filterBy = filterBy.toLocaleLowerCase();
+        return this.products.filter((product: IProduct) => 
+                product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+      }
 
       toggleImage(): void {
         this.showImage = !this.showImage;
